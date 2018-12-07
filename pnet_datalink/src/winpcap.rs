@@ -214,6 +214,10 @@ impl DataLinkSender for DataLinkSenderImpl {
                                 eh.copy_from_slice(packet);
                             })
     }
+
+    fn raw_fd(&self) -> libc::c_int {
+        -1
+    }
 }
 
 unsafe impl Send for DataLinkSenderImpl {}
@@ -259,6 +263,10 @@ impl DataLinkReceiver for DataLinkReceiverImpl {
             slice::from_raw_parts(data as *const u8, len)
         };
         Ok(slice)
+    }
+
+    fn raw_fd(&self) -> libc::c_int {
+        -1
     }
 }
 

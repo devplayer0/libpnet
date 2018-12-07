@@ -213,6 +213,11 @@ impl DataLinkSender for DataLinkSenderImpl {
                                 eh.clone_from_slice(packet);
                             })
     }
+
+    #[inline]
+    fn raw_fd(&self) -> libc::c_int {
+        unsafe { NETMAP_FD(self.desc.desc) }
+    }
 }
 
 struct DataLinkReceiverImpl {
@@ -238,6 +243,11 @@ impl DataLinkReceiver for DataLinkReceiverImpl {
             buf = unsafe { nm_nextpkt(desc, &mut h) };
         }
         Ok(unsafe { slice::from_raw_parts(buf, h.len as usize) })
+    }
+
+    #[inline]
+    fn raw_fd(&self) -> libc::c_int {
+        unsafe { NETMAP_FD(self.desc.desc) }
     }
 }
 

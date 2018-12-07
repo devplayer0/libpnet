@@ -124,6 +124,10 @@ impl DataLinkSender for MockDataLinkSender {
         self.sender.send(buffer.into_boxed_slice()).unwrap_or(());
         Some(Ok(()))
     }
+
+    fn raw_fd(&self) -> libc::c_int {
+        -1
+    }
 }
 
 struct MockDataLinkReceiver {
@@ -154,6 +158,10 @@ impl DataLinkReceiver for MockDataLinkReceiver {
                 }
             }
         }
+    }
+
+    fn raw_fd(&self) -> libc::c_int {
+        -1
     }
 }
 

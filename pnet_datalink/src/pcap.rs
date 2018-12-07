@@ -129,6 +129,10 @@ impl DataLinkSender for DataLinkSenderImpl {
             Err(e) => Err(io::Error::new(io::ErrorKind::Other, e)),
         })
     }
+
+    fn raw_fd(&self) -> libc::c_int {
+        -1
+    }
 }
 
 struct InvalidDataLinkSenderImpl {}
@@ -148,6 +152,10 @@ impl DataLinkSender for InvalidDataLinkSenderImpl {
                _packet: &[u8],
                _dst: Option<NetworkInterface>) -> Option<io::Result<()>> {
         None
+    }
+    
+    fn raw_fd(&self) -> libc::c_int {
+        -1
     }
 }
 

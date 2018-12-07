@@ -203,6 +203,10 @@ pub trait DataLinkSender: Send {
     /// `None` should be passed.
     #[inline]
     fn send_to(&mut self, packet: &[u8], dst: Option<NetworkInterface>) -> Option<io::Result<()>>;
+
+    /// Get the file descriptor for this channel's socket
+    #[inline]
+    fn raw_fd(&self) -> libc::c_int;
 }
 
 /// Structure for receiving packets at the data link layer. Should be constructed using
@@ -211,6 +215,12 @@ pub trait DataLinkReceiver: Send {
     #[inline]
     /// Get the next Ethernet frame in the channel
     fn next(&mut self) -> io::Result<&[u8]>;
+
+    /// Get the file descriptor for this channel's socket
+    ///
+    /// Will be -1 on unsupported platforms
+    #[inline]
+    fn raw_fd(&self) -> libc::c_int;
 }
 
 /// Represents a network interface and its associated addresses

@@ -317,6 +317,11 @@ impl DataLinkSender for DataLinkSenderImpl {
             }
         }
     }
+
+    #[inline]
+    fn raw_fd(&self) -> libc::c_int {
+        self.socket.fd
+    }
 }
 
 struct DataLinkReceiverImpl {
@@ -358,6 +363,11 @@ impl DataLinkReceiver for DataLinkReceiverImpl {
                 Err(e) => Err(e),
             }
         }
+    }
+
+    #[inline]
+    fn raw_fd(&self) -> libc::c_int {
+        self.socket.fd
     }
 }
 

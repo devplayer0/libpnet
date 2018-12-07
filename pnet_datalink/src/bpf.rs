@@ -325,6 +325,11 @@ impl DataLinkSender for DataLinkSenderImpl {
             }
         }
     }
+    
+    #[inline]
+    fn raw_fd(&self) -> libc::c_int {
+        self.fd.fd
+    }
 }
 
 struct DataLinkReceiverImpl {
@@ -394,6 +399,11 @@ impl DataLinkReceiver for DataLinkReceiverImpl {
             *i = 0;
         }
         Ok(&self.read_buffer[start..start + len])
+    }
+    
+    #[inline]
+    fn raw_fd(&self) -> libc::c_int {
+        self.fd.fd
     }
 }
 
